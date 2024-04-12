@@ -2,31 +2,32 @@ from github import Github
 from github import Auth
 
 from notion_client import Client
-import env
+import os
 
 
 # GitHub 설정
 # using an access token
-auth = Auth.Token(env.TOKEN)
+
+auth = Auth.Token(os.environ['PERSONAL_GITHUB_ACCESS_KEY'])
 g = Github(auth=auth, verify=False)
 
-repo = g.get_repo(f"{env.OWNER}/{env.REPO_NAME}")
+repo = g.get_repo(f"{os.environ['REPO_OWNER']}/{os.environ['REPO_NAME']}")
 
 # Notion 설정
-notion_token = env.NOTION_TOKEN
+notion_token = os.environ['NOTION_KEY']
 notion = Client(auth=notion_token)
-database_id = env.NOTION_DB
+database_id = os.environ['NOTION_DATABASE_ID']
 
-# GitHub 이슈 가져오기
-issues = repo.get_issues(state='all')  # 'all'로 설정하여 열린 이슈와 닫힌 이슈 모두 가져옴
+
+issues = repo.get_issues(state='all')  
 
 query = notion.databases.query(database_id=database_id)
 notion_issues = {page["properties"]["Title"]["title"][0]["text"]["content"]: page["id"] for page in query["results"] if "Title" in page["properties"]}
 
 for issue in issues:
-    # 기본 properties 설정. 'Name' 대신에 실제 Notion 데이터베이스에 정의된 제목 속성의 이름을 사용하세요.
+
     properties = {
-        "Title": { # 'Name' 대신 Notion에서 사용하는 정확한 필드 이름을 사용해야 합니다.
+        "Title": { 
             "title": [
                 {
                     "text": {
@@ -39,28 +40,20 @@ for issue in issues:
             "rich_text": [
                 {
                     "text": {
-                        "content": issue.body or "No description", # 본문이 없는 경우 대체 텍스트 제공
+                        "content": issue.body or "No description",
                     },
                 },
             ],
         },
-        # 'Comments'를 'rich_text' 유형으로 처리합니다.
-        "Comments": {
-            "rich_text": [
-                {
-                    "text": {
-                        "content": str(issue.comments), # 댓글 수를 문자열로 변환
-                    },
-                },
-            ],
+        "Links": {
+            "url": issue.html_url
         },
         "Created At": {
             "date": {
                 "start": issue.created_at.isoformat(),
-                "end": None,
+                "end": issue.closed_at.isoformat() if issue.closed_at else None,
             },
         },
-        # 이슈가 닫혔을 경우에만 'Closed At' 속성 추가
         "State": {
             "select": {
                 "name": issue.state,
@@ -68,19 +61,8 @@ for issue in issues:
         },
     }
 
-    if issue.closed_at:
-        properties["Closed At"] = {
-            "date": {
-                "start": issue.closed_at.isoformat(),
-                "end": None,
-            },
-        }
-
-    # Notion에 해당 이슈가 이미 존재하는지 확인
     if issue.title in notion_issues:
-        # 해당 이슈를 업데이트
         notion.pages.update(page_id=notion_issues[issue.title], properties=properties)
     else:
-        # 새로운 이슈를 생성
         notion.pages.create(parent={"database_id": database_id}, properties=properties)
 
