@@ -1,21 +1,3 @@
-<!--
-Hey, thanks for using the awesome-readme-template template.  
-If you have any enhancements, then fork this project and create a pull request 
-or just open an issue with the label "enhancement".
-
-Don't forget to give this project a star for additional support ;)
-Maybe you can mention me or this repo in the acknowledgements too
--->
-
-<!--
-This README is a slimmed down version of the original one.
-Removed sections:
-- Screenshots
-- Running Test
-- Deployment
-- FAQ
-- Acknowledgements
--->
 
 <div align="center">
 
@@ -75,13 +57,11 @@ Removed sections:
   * [Installation](#installation)
   * [Run Locally](#run-locally)
 - [Usage](#usage)
-- [Roadmap](#roadmap)
 - [Contributing](#contributing)
   * [Code of Conduct](#code-of-conduct)
 - [License](#license)
 - [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
-  
+
 
 <!-- About the Project -->
 ## About the Project
@@ -230,23 +210,13 @@ function App() {
 }
 ```
 
-<!-- Roadmap -->
-## Roadmap
-
-* [x] Todo 1
-* [ ] Todo 2
 
 <!-- Contributing -->
 ## Contributing
 
-<a href="https://github.com/Louis3797/awesome-readme-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Louis3797/awesome-readme-template" />
+<a href="https://github.com/sh0116">
+  <img width=100 height=100 src="https://avatars.githubusercontent.com/u/38518675?v=4" />
 </a>
-
-
-Contributions are always welcome!
-
-See `contributing.md` for ways to get started.
 
 
 <!-- Code of Conduct -->
@@ -258,22 +228,10 @@ Please read the [Code of Conduct](https://github.com/Louis3797/awesome-readme-te
 <!-- License -->
 ## License
 
-Distributed under the no License. See LICENSE.txt for more information.
+No License
 
 
 <!-- Contact -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/Louis3797/awesome-readme-template](https://github.com/Louis3797/awesome-readme-template)
-
-<!-- Acknowledgments -->
-## Acknowledgements
-
-Use this section to mention useful resources and libraries that you have used in your projects.
-
- - [Shields.io](https://shields.io/)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [Emoji Cheat Sheet](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#travel--places)
- - [Readme Template](https://github.com/othneildrew/Best-README-Template)
+Email : seokhyeon116@naver.com
